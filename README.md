@@ -30,7 +30,7 @@
 ```bash
 $ npm install
 $ npm i -g @nestjs/cli
-$ npm install @nestjs/typeorm typeorm @nestjs/mongoose mongoose
+$ npm install @nestjs/typeorm typeorm
 $ npm i dotenv
 ```
 
