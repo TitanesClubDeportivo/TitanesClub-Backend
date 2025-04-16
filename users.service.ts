@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from '../TitanesClub-Backend/src/users/dto/create-user.dto';
+import { UpdateUserDto } from '../TitanesClub-Backend/src/users/dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { User } from '../TitanesClub-Backend/src/users/entities/user.entity';
 import { Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +24,7 @@ export class UsersService {
     return await this.UsersRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: ObjectId) {
     return await this.UsersRepository.findOneBy({_id:id});
   }
 

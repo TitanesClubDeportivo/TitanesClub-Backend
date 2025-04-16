@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configDotenv } from 'dotenv';
+import { AuthModule } from './auth/auth.module';
 configDotenv();
 
 @Module({
@@ -15,6 +16,7 @@ configDotenv();
       database: 'Titanes',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
+    AuthModule,
     
   ],
   controllers: [AppController],

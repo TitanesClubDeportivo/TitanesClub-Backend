@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./src/app.controller");
-const app_service_1 = require("./src/app.service");
-const users_module_1 = require("./src/users/users.module");
+const app_controller_1 = require("./app.controller");
+const app_service_1 = require("./app.service");
+const users_module_1 = require("./users/users.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const dotenv_1 = require("dotenv");
+const auth_module_1 = require("./auth/auth.module");
 (0, dotenv_1.configDotenv)();
 let AppModule = class AppModule {
 };
@@ -27,6 +28,7 @@ exports.AppModule = AppModule = __decorate([
                 database: 'Titanes',
                 entities: [__dirname + '/**/*.entity{.ts,.js}'],
             }),
+            auth_module_1.AuthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
