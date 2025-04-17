@@ -35,6 +35,9 @@ $ npm i dotenv
 $ npm i class-validator
 $ npm i class-transformer
 $ npm i bcryptjs
+$ npm i resend
+$ npm i @nestjs/config
+$ npm i @nestjs/jwt
 ```
 
 ## Compile and run the project

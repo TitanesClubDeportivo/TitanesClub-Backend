@@ -12,11 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
+const email_confirmation_service_1 = require("../email-confirmation/email-confirmation.service");
 const bycriptjs = require("bcryptjs");
 let AuthService = class AuthService {
     usersService;
-    constructor(usersService) {
+    emailConfirmationService;
+    constructor(usersService, emailConfirmationService) {
         this.usersService = usersService;
+        this.emailConfirmationService = emailConfirmationService;
     }
     login() {
         return { message: 'Login successful' };
@@ -26,16 +29,24 @@ let AuthService = class AuthService {
         if (user) {
             throw new common_1.BadRequestException("Usuario ya existe");
         }
-        return this.usersService.create({
+        const emailUser = await this.usersService.findOneByEmail(email);
+        if (emailUser) {
+            throw new common_1.BadRequestException("Un usuario ya tiene ese Email");
+        }
+        await this.usersService.create({
             usuario,
             email,
             contraseña: await bycriptjs.hash(contraseña, 10)
         });
+        this.emailConfirmationService.sendVerificationLink(email);
+        return {
+            message: "Usuario registrado exitosamente. Por favor revise su correo electrónico para verificar su cuenta."
+        };
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __metadata("design:paramtypes", [users_service_1.UsersService, email_confirmation_service_1.EmailConfirmationService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

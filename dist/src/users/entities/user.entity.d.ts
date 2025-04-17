@@ -4,5 +4,6 @@ export declare class User {
     usuario: string;
     nombre: string;
     email: string;
+    isActive: boolean;
     contraseña: string;
 }

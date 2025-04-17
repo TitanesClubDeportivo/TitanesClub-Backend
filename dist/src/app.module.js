@@ -14,6 +14,9 @@ const users_module_1 = require("./users/users.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const dotenv_1 = require("dotenv");
 const auth_module_1 = require("./auth/auth.module");
+const config_1 = require("@nestjs/config");
+const email_confirmation_module_1 = require("./email-confirmation/email-confirmation.module");
+const Joi = require("@hapi/joi");
 (0, dotenv_1.configDotenv)();
 let AppModule = class AppModule {
 };
@@ -29,6 +32,14 @@ exports.AppModule = AppModule = __decorate([
                 entities: [__dirname + '/**/*.entity{.ts,.js}'],
             }),
             auth_module_1.AuthModule,
+            config_1.ConfigModule.forRoot({
+                validationSchema: Joi.object({
+                    JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
+                    JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+                    EMAIL_CONFIRMATION_URL: Joi.string().required(),
+                })
+            }),
+            email_confirmation_module_1.EmailConfirmationModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

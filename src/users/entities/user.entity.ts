@@ -12,8 +12,11 @@ export class User {
     @Column()
     nombre:string;
 
-    @Column()
+    @Column({ unique: true })
     email:string;
+
+    @Column({ default: false })
+    isActive: boolean;
 
     @Column()
     contraseña:string;

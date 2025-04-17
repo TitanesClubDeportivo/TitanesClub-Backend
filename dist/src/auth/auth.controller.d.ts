@@ -6,5 +6,7 @@ export declare class AuthController {
     login(): {
         message: string;
     };
-    register(registerDto: RegisterDto): Promise<import("../users/dto/create-user.dto").CreateUserDto & import("../users/entities/user.entity").User>;
+    register(registerDto: RegisterDto): Promise<{
+        message: string;
+    }>;
 }
