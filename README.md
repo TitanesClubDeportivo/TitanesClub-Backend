@@ -32,6 +32,9 @@ $ npm install
 $ npm i -g @nestjs/cli
 $ npm install @nestjs/typeorm typeorm
 $ npm i dotenv
+$ npm i class-validator
+$ npm i class-transformer
+$ npm i bcryptjs
 ```
 
 ## Compile and run the project

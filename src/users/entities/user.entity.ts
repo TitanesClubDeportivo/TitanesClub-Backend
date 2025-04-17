@@ -7,6 +7,9 @@ export class User {
     _id:ObjectId;
 
     @Column()
+    usuario:string;
+    
+    @Column()
     nombre:string;
 
     @Column()

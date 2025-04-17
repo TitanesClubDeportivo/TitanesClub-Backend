@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,11 +39,19 @@ export class UsersService {
     return await this.UsersRepository.delete(_id);
   }
 
+  async findOneByEmail(email: string){
+    return await this.UsersRepository.findOneBy({email});
+  }
+
+  async findOneByUser(usuario: string){
+    return await this.UsersRepository.findOneBy({usuario});
+  }
+
   DocumentId(id: string){
     try {
       return new ObjectId(id);
     } catch (error) {
-      return error;
+      throw new BadRequestException("id del usuario incorrecta");
     }
   }
 }

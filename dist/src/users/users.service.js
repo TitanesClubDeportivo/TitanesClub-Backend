@@ -41,12 +41,18 @@ let UsersService = class UsersService {
         const _id = this.DocumentId(id);
         return await this.UsersRepository.delete(_id);
     }
+    async findOneByEmail(email) {
+        return await this.UsersRepository.findOneBy({ email });
+    }
+    async findOneByUser(usuario) {
+        return await this.UsersRepository.findOneBy({ usuario });
+    }
     DocumentId(id) {
         try {
             return new mongodb_1.ObjectId(id);
         }
         catch (error) {
-            return error;
+            throw new common_1.BadRequestException("id del usuario incorrecta");
         }
     }
 };
