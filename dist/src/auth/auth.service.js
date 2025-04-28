@@ -36,7 +36,8 @@ let AuthService = class AuthService {
         await this.usersService.create({
             usuario,
             email,
-            contraseña: await bycriptjs.hash(contraseña, 10)
+            contraseña: await bycriptjs.hash(contraseña, 10),
+            isActive: false
         });
         this.emailConfirmationService.sendVerificationLink(email);
         return {

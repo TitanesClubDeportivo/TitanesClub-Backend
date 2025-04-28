@@ -1,4 +1,6 @@
 export declare class ConfirmEmailDto {
     token: string;
 }
-export default ConfirmEmailDto;
+export declare class ResendConfirmationLinkDto {
+    email: string;
+}

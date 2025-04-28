@@ -4,7 +4,9 @@ export declare class EmailConfirmationService {
     private readonly jwtService;
     private readonly usersService;
     constructor(jwtService: JwtService, usersService: UsersService);
-    sendVerificationLink(email: string): void;
+    sendVerificationLink(email: string): Promise<{
+        message: string;
+    }>;
     confirmEmail(token: string): Promise<{
         message: string;
     }>;
