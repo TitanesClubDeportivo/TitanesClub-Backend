@@ -13,6 +13,7 @@ const auth_service_1 = require("./auth.service");
 const users_module_1 = require("../users/users.module");
 const jwt_1 = require("@nestjs/jwt");
 const email_confirmation_module_1 = require("../email-confirmation/email-confirmation.module");
+const config_1 = require("@nestjs/config");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -20,7 +21,16 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService],
-        imports: [users_module_1.UsersModule, jwt_1.JwtModule, email_confirmation_module_1.EmailConfirmationModule]
+        imports: [
+            config_1.ConfigModule.forRoot(),
+            users_module_1.UsersModule,
+            email_confirmation_module_1.EmailConfirmationModule,
+            jwt_1.JwtModule.register({
+                global: true,
+                secret: process.env.JWT_SECRET,
+                signOptions: { expiresIn: "60s" },
+            }),
+        ],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

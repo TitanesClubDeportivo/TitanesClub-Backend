@@ -14,15 +14,30 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
 const email_confirmation_service_1 = require("../email-confirmation/email-confirmation.service");
 const bycriptjs = require("bcryptjs");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
     usersService;
     emailConfirmationService;
-    constructor(usersService, emailConfirmationService) {
+    jwtService;
+    constructor(usersService, emailConfirmationService, jwtService) {
         this.usersService = usersService;
         this.emailConfirmationService = emailConfirmationService;
+        this.jwtService = jwtService;
     }
-    login() {
-        return { message: 'Login successful' };
+    async login(username, pass) {
+        const user = await this.usersService.findOneByUser(username);
+        console.log('JwtService instance:', this.jwtService);
+        if (!user) {
+            throw new common_1.UnauthorizedException('Usuario no encontrado');
+        }
+        const isPasswordValid = await bycriptjs.compare(pass, user.contraseña);
+        if (!isPasswordValid) {
+            throw new common_1.UnauthorizedException('Contraseña incorrecta');
+        }
+        const payload = { sub: user._id, username: user.usuario };
+        return {
+            access_token: await this.jwtService.signAsync(payload),
+        };
     }
     async register({ usuario, email, contraseña }) {
         const user = await this.usersService.findOneByUser(usuario);
@@ -37,17 +52,19 @@ let AuthService = class AuthService {
             usuario,
             email,
             contraseña: await bycriptjs.hash(contraseña, 10),
-            isActive: false
+            isActive: false,
         });
         this.emailConfirmationService.sendVerificationLink(email);
         return {
-            message: "Usuario registrado exitosamente. Por favor revise su correo electrónico para verificar su cuenta."
+            message: "Usuario registrado exitosamente. Por favor revise su correo electrónico para verificar su cuenta.",
         };
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_service_1.UsersService, email_confirmation_service_1.EmailConfirmationService])
+    __metadata("design:paramtypes", [users_service_1.UsersService,
+        email_confirmation_service_1.EmailConfirmationService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

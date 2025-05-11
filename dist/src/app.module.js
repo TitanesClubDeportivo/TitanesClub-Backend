@@ -33,6 +33,7 @@ exports.AppModule = AppModule = __decorate([
             }),
             auth_module_1.AuthModule,
             config_1.ConfigModule.forRoot({
+                isGlobal: true,
                 validationSchema: Joi.object({
                     JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
                     JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),

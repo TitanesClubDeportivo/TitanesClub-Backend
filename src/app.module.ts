@@ -21,6 +21,7 @@ configDotenv();
     }),
     AuthModule,
     ConfigModule.forRoot({
+      isGlobal: true,
       validationSchema: Joi.object({
         JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
         JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),
